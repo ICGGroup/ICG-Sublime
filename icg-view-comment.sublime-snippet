@@ -1,0 +1,23 @@
+<snippet>
+  <content><![CDATA[
+# ## ${1:ViewName}
+#
+# ${2:TODO: insert description}
+#
+# ### Options
+#
+# - **${3:param} : ${4:type}**  ${5:description}
+#
+# ### Events
+#
+# - **${6:event}**   ${7:description}
+#  
+# ### Usage
+#
+# ${8:TODO: insert usage}       
+#
+]]></content>
+  <tabTrigger>icgviewcomment</tabTrigger>
+  <scope>source.coffee</scope>
+  <description>ICG View Comment</description>
+</snippet>

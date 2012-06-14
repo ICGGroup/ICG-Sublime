@@ -1,0 +1,13 @@
+<snippet>
+  <content><![CDATA[
+label: "${1}"
+dataField: "${2}"
+css: "${3} phone-${4} columns"
+type: "${5:text}"
+required: ${6:false}
+readOnly: ${7:false}
+]]></content>
+  <tabTrigger>icglayoutfield</tabTrigger>
+  <scope>source.coffee</scope>
+  <description>ICG Backbone Model</description>
+</snippet>

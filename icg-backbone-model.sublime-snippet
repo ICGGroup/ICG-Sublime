@@ -1,0 +1,15 @@
+<snippet>
+	<content><![CDATA[
+define ["order!vendor/underscore",  "order!vendor/backbone"], (underscore, backbone) ->
+  # ## ${1:ModelName}
+  # ${2:description}
+
+  class $1 extends Backbone.Model
+    url: "$3"
+ 
+  $1
+]]></content>
+	<tabTrigger>icgmodel</tabTrigger>
+	<scope>source.coffee</scope>
+	<description>ICG Backbone Model</description>
+</snippet>

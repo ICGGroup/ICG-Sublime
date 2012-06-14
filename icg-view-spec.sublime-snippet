@@ -1,0 +1,16 @@
+<snippet>
+  <content><![CDATA[
+describe("${1:ViewName}", function(){
+
+  it("should render", function(){
+    var view = new $1();
+    expect(${2:object}).${3:expectation}
+  });
+
+});
+
+]]></content>
+  <tabTrigger>icgviewspec</tabTrigger>
+  <scope>source.js</scope>
+  <description>ICG Backbone View Spec</description>
+</snippet>

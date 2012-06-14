@@ -1,0 +1,9 @@
+<snippet>
+  <content><![CDATA[
+  # ## ${1:ModelName}
+  # ${2:description}
+]]></content>
+  <tabTrigger>icgmodelcomment</tabTrigger>
+  <scope>source.coffee</scope>
+  <description>ICG Model Comment</description>
+</snippet>

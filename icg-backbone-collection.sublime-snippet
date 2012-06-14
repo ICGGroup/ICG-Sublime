@@ -1,0 +1,14 @@
+<snippet>
+	<content><![CDATA[
+// ## ${1:CollectonName}
+// ${2:description}
+//
+$1 = Backbone.Collection.extend({ 
+	${3}
+});
+
+]]></content>
+	<tabTrigger>icgcollection</tabTrigger>
+	<scope>source.js</scope>
+	<description>ICG Backbone Collection</description>
+</snippet>

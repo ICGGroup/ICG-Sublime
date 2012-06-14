@@ -1,0 +1,12 @@
+<snippet>
+	<content><![CDATA[
+define([${1:files}], function() {
+	${2:TODO: insert tests here}
+});
+
+]]></content>
+	<tabTrigger>icgtestspec</tabTrigger>
+	<scope>source.js</scope>
+	<description>ICG Test Spec</description>
+</snippet>
+

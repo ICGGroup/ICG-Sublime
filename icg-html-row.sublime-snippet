@@ -1,0 +1,10 @@
+<snippet>
+  <content><![CDATA[
+<div class="row">
+  ${2}
+</div>
+]]></content>
+  <tabTrigger>icghtmlrow</tabTrigger>
+  <scope>source.coffee</scope>
+  <description>HTML Row Div</description>
+</snippet>

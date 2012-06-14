@@ -1,0 +1,23 @@
+<snippet>
+	<content><![CDATA[
+define ["order!vendor/underscore",  "order!vendor/backbone", "custom/base-view"], (underscore, backbone, BaseView) ->
+
+  # ## ${1:ViewName}
+  # ${2:TODO: insert description}
+  #
+  # ### Options
+  # - **${3:param} : ${4:type}**  ${5:description}
+  #
+  # ### Usage
+  # ${6:TODO: insert usage}       
+  #
+
+  class $1 extends BaseView
+    ${7}
+  $1
+
+]]></content>
+	<tabTrigger>icgview</tabTrigger>
+	<scope>source.coffee</scope>
+	<description>ICG Backbone View</description>
+</snippet>

@@ -1,0 +1,9 @@
+<snippet>
+  <content><![CDATA[
+// ### ${1:function}(${2:arguments})
+// ${3:TODO: insert description}    
+]]></content>
+  <tabTrigger>icgmethoddoc</tabTrigger>
+  <scope>source.js</scope>
+  <description>ICG Method Doc</description>
+</snippet>

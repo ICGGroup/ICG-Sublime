@@ -1,0 +1,21 @@
+<snippet>
+  <content><![CDATA[
+layout: 
+  sections:[
+    title: "${1}"
+    rows: [ 
+      fields: [
+        label: "${2}"
+        dataField: "${3}"
+        css: "${4} phone-${5} columns"
+        type: "${6:text}"
+        required: ${7:false}
+        readOnly: ${7:false}
+      ]
+    ]
+  ]
+]]></content>
+  <tabTrigger>icgsectionlayout</tabTrigger>
+  <scope>source.coffee</scope>
+  <description>ICG Backbone Model</description>
+</snippet>

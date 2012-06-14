@@ -1,0 +1,12 @@
+<snippet>
+  <content><![CDATA[
+it "${1:What it does}" do
+  ${2}
+end
+
+${3}
+]]></content>
+  <tabTrigger>it</tabTrigger>
+  <description>ICG Test Spec It</description>
+</snippet>
+

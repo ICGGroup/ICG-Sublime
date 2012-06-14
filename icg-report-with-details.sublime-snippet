@@ -1,0 +1,316 @@
+<snippet>
+	<content><![CDATA[
+DELETE FROM SYC_SEC_ROLE_TO_REPORT WHERE REPORT_NAME = '${1:ReportName}' AND ROLE_NAME = 'PORTAL_ADMIN'
+
+DELETE FROM SYC_REPORTS WHERE REPORT_NAME = '$1' 
+
+INSERT INTO SYC_REPORTS ([REPORT_NAME] ,[REPORT_TITLE] ,[REPORT_DESC] ,[REPORT_FILENAME] ,[REPORT_BLD_PKG] ,[CONFIG_DATA] ,[REPORT_GROUP] ,[CFG_CREATE_DT] ,[CFG_CREATE_USER] ,[CFG_LAST_MOD_DT] ,[CFG_LAST_MOD_USER] ,[CFG_TAG] ,[CFG_COMMENTS] ,[CFG_MOD_STATUS]) VALUES ('$1' ,'${2:ReportTitle}' ,'$3' ,'$1' ,null ,null ,'GENERAL' ,GETDATE() ,null ,GETDATE() ,null ,'REPORTS' ,null ,null)
+
+INSERT INTO SYC_SEC_ROLE_TO_REPORT ([ROLE_NAME] ,[REPORT_NAME] ,[CFG_CREATE_DT] ,[CFG_CREATE_USER] ,[CFG_LAST_MOD_DT] ,[CFG_LAST_MOD_USER] ,[CFG_TAG] ,[CFG_COMMENTS] ,[CFG_MOD_STATUS]) VALUES ('PORTAL_ADMIN' ,'$1' ,GETDATE() ,null ,GETDATE() ,null ,'REPORTS' ,null ,null)
+
+DELETE FROM SYC_IO_BLD_PKGS WHERE BLD_PKG = '${4:BuildPackage}';
+
+DELETE FROM SYC_IO_BLD_STATEMENTS WHERE BLD_STATEMENT = '$4';
+
+INSERT INTO SYC_IO_BLD_STATEMENTS ( BLD_STATEMENT, CONNECTION_KEY, SELECT_STATEMENT, WHERE_CLAUSE, ORDER_BY_CLAUSE, MAIN_TABLE_NAME, CFG_CREATE_DT, CFG_CREATE_USER, CFG_LAST_MOD_DT, CFG_LAST_MOD_USER, CFG_TAG, CFG_COMMENTS, CFG_MOD_STATUS ) VALUES ( '$4', 'RPM', '${5:Select}', '${6:Where} _\$\$FILTER ', '${7:Order By}', '$1', null, 'jdouglas', null, 'jdouglas', '', '', 'N' );
+
+INSERT INTO SYC_IO_BLD_PKGS (BLD_PKG, BLD_STATEMENT, EXECUTE_ORDER ) VALUES ('$1', '$1', 1 );
+
+UPDATE [SYC_REPORTS] SET CONFIG_DATA = 
+'{   "name":"$1",
+    "title":"$2",
+    "description":"$3",
+    "buildPackage":"$4",
+		"filterBar":{
+		"canAddFilters":true,
+		"canRemoveFilters":true,
+		"maxFilters":5,
+		"historyKey":"$1",
+		"filterPrefix":"AND",
+		"filterButtonLabel":"Go",
+		"clearButtonLabel":"Clear",
+		"fields":[
+			{
+				"label":"Process Date",
+				"key":"ACTION_DT",
+				"required":false, 
+				"suggested":false, 
+				"filters":[
+					{
+						"key":"IS_GREATER_THEN",
+						"pattern":"[value]",
+						"label":"within",
+						"options":[ 
+							{"label":"7 days", "value":"H.ACTION_DT > DATEADD(dd, -7, GETDATE())"},
+							{"label":"14 days", "value":"H.ACTION_DT > DATEADD(dd, -14, GETDATE())"},
+							{"label":"30 days", "value":"H.ACTION_DT > DATEADD(dd, -30, GETDATE())"},
+							{"label":"365 days", "value":"H.ACTION_DT > DATEADD(dd, -365, GETDATE())"}
+						]
+					},
+					{
+						"key":"IS_BEFORE",
+						"pattern":"H.ACTION_DT < ''[value]''",
+						"label":"is on or before"
+					},
+					{
+						"key":"IS_AFTER",
+						"pattern":"H.ACTION_DT > ''[value]''",
+						"label":"is on or after"
+					}
+				]
+			}					
+		]
+	},
+    "displays":[
+        {
+			"displayType":"columnChart",
+			"title":"$2",
+		  	"dataTable":"$1",
+         	"options":{
+				"showDataTips":true,
+				"verticalAxis":{
+					"linearAxis":
+						{
+						"title":"Count"
+						}
+					},				
+				"horizontalAxis":{
+					"categoryAxis":{
+						"field":"FULL_NAME",
+						"title":"User"
+						}
+					},
+				"series":[
+					{
+						"xField":"FULL_NAME",
+						"yField":"ITEM_COUNT",
+						"displayName":"Item Count"					
+					}	
+				]
+			}
+     	},
+		{
+			"displayType":"grid",
+			"title":"$2",
+		  "dataTable":"$1",
+			"options":{
+				"enableExport":"true",
+				"enablePaging":"false",
+				"canAddFilters":"false",
+				"draggableColumns":"false",
+				"selectable":"true",
+				"showHiddenFilters":"true",
+				"columns":[
+					{ "headerText":"User", "dataField":"FULL_NAME"},
+					{ "headerText":"Date", "dataField":"ACTION_DATE", "columnType":"date"},
+					{ "headerText":"Queue", "dataField":"QUEUE"},
+					{ "headerText":"Item Count", "dataField":"ITEM_COUNT", "columnType":"numeric"}
+				]
+			}
+		}
+    ]
+}'
+WHERE REPORT_NAME = '$1'
+
+
+
+
+
+DELETE FROM SYC_SEC_ROLE_TO_REPORT WHERE REPORT_NAME = '$1_DRILLDOWN_REPORT' AND ROLE_NAME = 'PORTAL_ADMIN'
+
+DELETE FROM SYC_REPORTS WHERE REPORT_NAME = '$1_DRILLDOWN_REPORT' 
+
+INSERT INTO SYC_REPORTS ([REPORT_NAME] ,[REPORT_TITLE] ,[REPORT_DESC] ,[REPORT_FILENAME] ,[REPORT_BLD_PKG] ,[CONFIG_DATA] ,[REPORT_GROUP] ,[CFG_CREATE_DT] ,[CFG_CREATE_USER] ,[CFG_LAST_MOD_DT] ,[CFG_LAST_MOD_USER] ,[CFG_TAG] ,[CFG_COMMENTS] ,[CFG_MOD_STATUS]) VALUES ('$1_DRILLDOWN_REPORT' ,'$2 Drilldown' ,'$3' ,'$1' ,null ,null ,'GENERAL' ,GETDATE() ,null ,GETDATE() ,null ,'REPORTS' ,null ,null)
+
+INSERT INTO SYC_SEC_ROLE_TO_REPORT ([ROLE_NAME] ,[REPORT_NAME] ,[CFG_CREATE_DT] ,[CFG_CREATE_USER] ,[CFG_LAST_MOD_DT] ,[CFG_LAST_MOD_USER] ,[CFG_TAG] ,[CFG_COMMENTS] ,[CFG_MOD_STATUS]) VALUES ('PORTAL_ADMIN' ,'$1_DRILLDOWN_REPORT' ,GETDATE() ,null ,GETDATE() ,null ,'REPORTS' ,null ,null)
+
+DELETE FROM SYC_IO_BLD_PKGS WHERE BLD_PKG = '$4.Drilldown';
+
+DELETE FROM SYC_IO_BLD_STATEMENTS WHERE BLD_STATEMENT = '$4.Drilldown';
+
+INSERT INTO SYC_IO_BLD_STATEMENTS ( BLD_STATEMENT, CONNECTION_KEY, SELECT_STATEMENT, WHERE_CLAUSE, ORDER_BY_CLAUSE, MAIN_TABLE_NAME, CFG_CREATE_DT, CFG_CREATE_USER, CFG_LAST_MOD_DT, CFG_LAST_MOD_USER, CFG_TAG, CFG_COMMENTS, CFG_MOD_STATUS ) VALUES ( 'RPM.Reports.RequestAging.Drilldown', 'RPM', '${8: Details Select}', '${9:Details Where} _\$\$FILTER ', '${10:Details Order By}', '$1_DRILLDOWN', null, 'jdouglas', null, 'jdouglas', '', '', 'N' );
+
+INSERT INTO SYC_IO_BLD_PKGS (BLD_PKG, BLD_STATEMENT, EXECUTE_ORDER ) VALUES ('$4.Drilldown', '$4.Drilldown', 0 );
+
+
+UPDATE [SYC_REPORTS] SET CONFIG_DATA = 
+'{   "name":"$1_DRILLDOWN_REPORT",
+    "title":"$2 Drilldown",
+    "description":"$3",
+    "buildPackage":"$4.Drilldown",
+		"filterBar":{
+		"canAddFilters":true,
+		"canRemoveFilters":true,
+		"maxFilters":5,
+		"historyKey":"$1_DRILLDOWN_REPORT",
+		"filterPrefix":"AND",
+		"filterButtonLabel":"Go",
+		"clearButtonLabel":"Clear",
+		"fields":[
+			{
+				"label":"Age",
+				"key":"AGE",
+				"required":false, 
+				"suggested":false, 
+				"filters":[
+					{
+						"key":"IS_X_DAYS_OLD",
+						"pattern":"(W.CREATE_DT > CONVERT(varchar, DATEADD(dd, -[value], GETDATE()), 101) AND W.CREATE_DT < CONVERT(varchar, DATEADD(dd, -([value] - 1), GETDATE()), 101))",
+						"label":"is exactly X days old",
+						"filterRegex":"^\\d*$"
+					},
+					{
+						"key":"AT_MOST_X_DAYS_OLD",
+						"pattern":"(W.CREATE_DT > CONVERT(varchar, DATEADD(dd, -[value], GETDATE()), 101))",
+						"label":"is at most X days old",
+						"filterRegex":"^\\d*$"
+					},
+					{
+						"key":"AT_LEAST_X_DAYS_OLD",
+						"pattern":"(W.CREATE_DT < CONVERT(varchar, DATEADD(dd, -([value] - 1), GETDATE()), 101))",
+						"label":"is at least X days old",
+						"filterRegex":"^\\d*$"
+					},
+				]
+			},
+			{
+				"label":"Create Date",
+				"key":"CREATE_DATE",
+				"required":false, 
+				"suggested":false, 
+				"filters":[
+					{
+						"key":"IS",
+						"pattern":"W.CREATE_DT > ''[value]'' AND WCREATE_DT < DATEADD(dd, 1, ''[value]'')",
+						"label":"is",
+						"filterRegex":"^\\d{1,2}/\\d{1,2}/\\d{2}?\\d{2}$"
+					},
+					{
+						"key":"IS_AFTER",
+						"pattern":"W.CREATE_DT > ''[value]''",
+						"label":"is on or after",
+						"filterRegex":"^\\d{1,2}/\\d{1,2}/\\d{2}?\\d{2}$"
+					},
+					{
+						"key":"IS_BEFORE",
+						"pattern":"W.CREATE_DT < DATEADD(dd, 1, ''[value]'')",
+						"label":"is on or before",
+						"filterRegex":"^\\d{1,2}/\\d{1,2}/\\d{2}?\\d{2}$"
+					}
+				]
+			},					
+			{
+				"label":"Current Queue",
+				"key":"QUEUE",
+				"required":false, 
+				"suggested":false, 
+				"filters":[
+					{
+						"key":"IS",
+						"pattern":"W.QUEUE = ''[value]''",
+						"label":"is",
+						"optionsRefBuildPackage":"RPM.Reports.ReferenceData",
+						"optionsDataTable":"SYC_QUEUE",
+						"optionsDataField":"QUEUE",
+						"optionsLabelField":"QUEUE_DESC"						
+					}
+				]
+			},	
+			{
+				"label":"Queue Age",
+				"key":"QUEUE_AGE",
+				"required":false, 
+				"suggested":false, 
+				"filters":[
+					{
+						"key":"IS_X_DAYS_OLD",
+						"pattern":"(W.QUEUE_ENTRY_DT > CONVERT(varchar, DATEADD(dd, -[value], GETDATE()), 101) AND W.QUEUE_ENTRY_DT < CONVERT(varchar, DATEADD(dd, -([value] - 1), GETDATE()), 101))",
+						"label":"is exactly X days old",
+						"filterRegex":"^\\d*$"
+					},
+					{
+						"key":"AT_MOST_X_DAYS_OLD",
+						"pattern":"(W.QUEUE_ENTRY_DT > CONVERT(varchar, DATEADD(dd, -[value], GETDATE()), 101))",
+						"label":"is at most X days old",
+						"filterRegex":"^\\d*$"
+					},
+					{
+						"key":"AT_LEAST_X_DAYS_OLD",
+						"pattern":"(W.QUEUE_ENTRY_DT < CONVERT(varchar, DATEADD(dd, -([value] - 1), GETDATE()), 101))",
+						"label":"is at least X days old",
+						"filterRegex":"^\\d*$"
+					},
+				]
+			},
+			{
+				"label":"Queue Entry Date",
+				"key":"QUEUE_ENTRY_DATE",
+				"required":false, 
+				"suggested":false, 
+				"filters":[
+					{
+						"key":"IS",
+						"pattern":"W.QUEUE_ENTRY_DT > ''[value]'' AND W.QUEUE_ENTRY_DT < DATEADD(dd, 1, ''[value]'')",
+						"label":"is",
+						"filterRegex":"^\\d{1,2}/\\d{1,2}/\\d{2}?\\d{2}$"
+					},
+					{
+						"key":"IS_AFTER",
+						"pattern":"W.QUEUE_ENTRY_DT > ''[value]''",
+						"label":"is on or after",
+						"filterRegex":"^\\d{1,2}/\\d{1,2}/\\d{2}?\\d{2}$"
+					},
+					{
+						"key":"IS_BEFORE",
+						"pattern":"W.QUEUE_ENTRY_DT < DATEADD(dd, 1, ''[value]'')",
+						"label":"is on or before",
+						"filterRegex":"^\\d{1,2}/\\d{1,2}/\\d{2}?\\d{2}$"
+					}
+				]
+			},
+			{
+				"label":"Vendor Short Name",
+				"key":"VENDOR_SHORT_NAME",
+				"required":false, 
+				"suggested":false, 
+				"filters":[
+					{
+						"key":"STARTS_WITH",
+						"pattern":"R.VENDOR_SHORT_NAME like ''[value]%''",
+						"label":"starts with"
+					}
+				]
+			}						
+		]
+	},
+    "displays":[
+		{
+			"displayType":"grid",
+			"title":"Request Aging Details",
+		  	"dataTable":"$1_DRILLDOWN",
+			"options":{
+				"enableExport":"true",
+				"enablePaging":"false",
+				"canAddFilters":"false",
+				"draggableColumns":"false",
+				"selectable":"true",
+				"showHiddenFilters":"true",
+				"columns":[
+					{ "headerText":"User", "dataField":"FULL_NAME"},
+					{ "headerText":"Date", "dataField":"ACTION_DATE", "columnType":"date"},
+					{ "headerText":"Queue", "dataField":"QUEUE"},
+					{ "headerText":"Doc Type", "dataField":"DOC_TYPE_DESC"},
+					{ "headerText":"Inv Nbr", "dataField":"INV_NBR"}
+				]
+			}
+		}
+    ]
+}'
+WHERE REPORT_NAME = '$1_DRILLDOWN_REPORT'
+
+
+]]></content>
+	<tabTrigger>icg-report-details</tabTrigger>
+	<scope>source.sql</scope>
+	<description>ICG Report w/Details Script</description>
+</snippet>

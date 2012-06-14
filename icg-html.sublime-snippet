@@ -1,0 +1,8 @@
+<snippet>
+  <content><![CDATA[
+<div class="${1}">${2}</div>
+]]></content>
+  <tabTrigger>icghtmldiv</tabTrigger>
+  <scope>source.coffee</scope>
+  <description>HTML Div</description>
+</snippet>

@@ -1,0 +1,10 @@
+<snippet>
+  <content><![CDATA[
+<div class="${1:twelve} columns phone-${2:four}">
+  ${3}
+</div>
+]]></content>
+  <tabTrigger>icghtmlcolumn</tabTrigger>
+  <scope>source.coffee</scope>
+  <description>HTML Row Div</description>
+</snippet>
