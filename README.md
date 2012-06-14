@@ -1,6 +1,6 @@
 # ICG-Sublime
 
-A package for Sublime Text 2 with handy Backbone, Require.JS and Markdown snippets
+A package for [Sublime Text 2](http://www.sublimetext.com/2) with handy Backbone, Require.JS and Markdown snippets
 
 ## Installation
 
