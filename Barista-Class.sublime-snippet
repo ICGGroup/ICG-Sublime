@@ -1,0 +1,29 @@
+<snippet>
+  <content><![CDATA[
+define [
+  "icg/localization"
+  "icg/logger"
+  "icg/ui/live-view"
+], (
+  localization 
+  logger
+  LiveView
+) ->
+
+  layouts = [
+    name: "${1:class}"
+    templateHTML: """
+      <div>Welcome</div>
+    """
+  ]
+  class ${2:ClassName} extends LiveView
+    className: "${1:class}"
+    layout: layouts[0]
+  ${2:ClassName}
+]]></content>
+  <tabTrigger>Barista:Class</tabTrigger>
+  <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+  <!-- <tabTrigger>hello</tabTrigger> -->
+  <!-- Optional: Set a scope to limit where the snippet will trigger -->
+  <!-- <scope>source.python</scope> -->
+</snippet>

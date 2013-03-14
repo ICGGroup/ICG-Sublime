@@ -1,0 +1,25 @@
+<snippet>
+  <content><![CDATA[
+define [
+  "icg/localization"
+], (
+  localization 
+) ->
+
+  layouts = [
+    name: "${1:Name}"
+    templateHTML: """
+    """
+
+    rows: [
+      selector: "${2:Selector}"
+      rowClass: "${3:row-fluid"}
+    ]
+  ]
+]]></content>
+  <tabTrigger>Barista:Layout</tabTrigger>
+  <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+  <!-- <tabTrigger>hello</tabTrigger> -->
+  <!-- Optional: Set a scope to limit where the snippet will trigger -->
+  <!-- <scope>source.python</scope> -->
+</snippet>
